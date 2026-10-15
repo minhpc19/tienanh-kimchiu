@@ -22,7 +22,26 @@
   a { display: inline-block; padding: 14px 28px; border: 1px solid #8b1e24; color: #8b1e24; text-decoration: none;
     letter-spacing: .15em; font-size: 13px; text-transform: uppercase; }
   a:hover { background: #8b1e24; color: #fff; }
+  a { transition: background 300ms ease, color 300ms ease; }
+  /* Hold content until the script font is ready, then fade it in (no font swap flash) */
+  main > * { opacity: 0; }
+  .ready main > * { animation: rise 1100ms cubic-bezier(.22,.61,.36,1) forwards; }
+  .ready main > p { animation-delay: 250ms; }
+  .ready main > .links { animation-delay: 500ms; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); filter: blur(4px); } to { opacity: 1; transform: none; filter: blur(0); } }
+  @media (prefers-reduced-motion: reduce) { main > * { opacity: 1; } .ready main > * { animation: none; } }
 </style>
+<script>
+  (function () {
+    var root = document.documentElement, done = function () { root.classList.add('ready'); };
+    try {
+      Promise.race([
+        document.fonts.load('400 48px "Great Vibes"', 'Tiến Anh & Kim Chiu'),
+        new Promise(function (r) { setTimeout(r, 1500); })
+      ]).then(done, done);
+    } catch (e) { done(); }
+  })();
+</script>
 </head>
 <body>
   <main>
