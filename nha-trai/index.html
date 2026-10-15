@@ -212,11 +212,11 @@
           <div style="font:var(--weight-light) clamp(24px,5vw,30px)/1 var(--font-serif);letter-spacing:.18em;color:var(--text-strong)">{{ dateShort }}</div>
           <div style="font:var(--weight-light) italic 17px/1.5 var(--font-serif);color:var(--text-muted);margin-top:12px">{{ lunarMain }}</div>
         </div>
-        <div data-reveal="550" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px">
+        <div data-reveal="550" style="display:grid;grid-template-columns:{{ heroBtnCols }};gap:12px;width:{{ heroBtnW }};margin-top:36px">
           <sc-if value="{{ showRsvp }}" hint-placeholder-val="{{ true }}">
-            <x-import component-from-global-scope="VietnamWeddingDesignSystem_e89e9f.Button" on-click="{{ goRsvp }}" hint-size="190px,48px">Xác nhận tham dự</x-import>
+            <x-import component-from-global-scope="VietnamWeddingDesignSystem_e89e9f.Button" full-width="{{ true }}" on-click="{{ goRsvp }}" hint-size="100%,48px">Xác nhận tham dự</x-import>
           </sc-if>
-          <x-import component-from-global-scope="VietnamWeddingDesignSystem_e89e9f.Button" variant="{{ eventsBtnVariant }}" icon-right="arrow-right" on-click="{{ goEvents }}" hint-size="170px,48px">Xem lễ cưới</x-import>
+          <x-import component-from-global-scope="VietnamWeddingDesignSystem_e89e9f.Button" full-width="{{ true }}" variant="{{ eventsBtnVariant }}" icon-right="arrow-right" on-click="{{ goEvents }}" hint-size="100%,48px">Xem lễ cưới</x-import>
         </div>
       </div>
       <div data-reveal="200" style="position:relative;width:min(100%,440px);margin:0 auto">
@@ -639,6 +639,8 @@ class Component extends DCLogic {
   componentDidUpdate() {
     this.scan();
     if (this.state.introOut && !this._out) { this._out = true; this.fallback(); }
+    // Lock page scroll behind the open mobile menu
+    if (!!this._menu !== this.state.menu) { this._menu = this.state.menu; document.body.style.overflow = this.state.menu ? 'hidden' : ''; }
   }
   fallback() {
     clearTimeout(this.tf);
@@ -715,6 +717,8 @@ class Component extends DCLogic {
       scrollCue: h('span', { style: { display: 'block', width: 0, height: 28, borderLeft: 'var(--hairline) solid var(--line-strong)', animation: this.reduced ? 'none' : 'vwFloat 2.4s ease-in-out infinite' } }),
       brand: `${A.name} & ${B.name}`,
       desktop: !mobile, mobile,
+      heroBtnCols: showRsvp && st.w >= 480 ? 'repeat(2,minmax(0,1fr))' : 'minmax(0,1fr)',
+      heroBtnW: showRsvp && st.w >= 480 ? 'min(100%,452px)' : 'min(100%,280px)',
       showRsvp, giftBg: showRsvp ? 'var(--surface-tint)' : 'transparent', eventsBtnVariant: showRsvp ? 'outline' : 'primary',
       heroCols: st.w >= 920 ? 'minmax(0,1fr) minmax(0,1fr)' : 'minmax(0,1fr)',
       heroCircleLeft: st.w >= 720 ? '-28px' : '-6px',
@@ -749,7 +753,7 @@ class Component extends DCLogic {
       sent: st.sent, notSent: !st.sent, name: st.name, nameErr: st.nameErr,
       onName: (e) => this.setState({ name: e.target.value, nameErr: '' }),
       attend: st.attend, onAttend: (v) => this.setState({ attend: v }), attending: st.attend === 'yes',
-      attendOptions: [{ value: 'yes', label: 'Sẽ tham dự' }, { value: 'no', label: 'Rất tiếc, không thể' }],
+      attendOptions: [{ value: 'yes', label: 'Sẽ tham dự' }, { value: 'no', label: 'Không thể đến' }],
       guestOptions: [{ value: '1', label: '1 người' }, { value: '2', label: '2 người' }, { value: '3', label: '3 người' }, { value: '4', label: '4 người trở lên' }],
       submitRsvp: () => this.submit(),
       guests: st.guests, onGuests: (e) => this.setState({ guests: e.target.value }),
