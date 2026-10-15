@@ -1,0 +1,21 @@
+/* Borders, radii, shadows, motion */
+:root{
+--hairline:.75px;--border-thin:1px;--border-frame:1px;
+--frame-inset:6px; /* gap between double-frame lines */
+
+--radius-none:0;--radius-xs:2px;--radius-sm:4px;--radius-pill:999px;
+--radius-arch:999px 999px 0 0; /* arched photo frames */
+
+--shadow-none:none;
+--shadow-paper:0 1px 2px rgba(110,86,48,.05),0 8px 24px -12px rgba(110,86,48,.14);
+--shadow-float:0 2px 6px rgba(110,86,48,.06),0 24px 48px -20px rgba(110,86,48,.22);
+--shadow-inset:inset 0 0 0 var(--hairline) var(--line-hair);
+
+--ease-soft:cubic-bezier(.22,.61,.36,1); /* @kind other */
+--ease-inout:cubic-bezier(.65,0,.35,1); /* @kind other */
+--dur-fast:180ms; /* @kind other */
+--dur-base:320ms; /* @kind other */
+--dur-slow:700ms; /* @kind other */
+--dur-reveal:1100ms; /* @kind other */
+--blur-glass:10px;
+}
