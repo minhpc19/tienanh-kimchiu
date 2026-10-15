@@ -79,9 +79,9 @@
   <div class="vs-in">
     <div class="vs-mono">
       <svg viewBox="0 0 104 104"><circle class="vs-ring2" cx="52" cy="52" r="47.5"/><circle class="vs-ring" cx="52" cy="52" r="51.6" pathLength="1"/></svg>
-      <span class="vs-l" style="animation-delay:500ms">A</span><span class="vs-l vs-amp" style="animation-delay:750ms">&amp;</span><span class="vs-l" style="animation-delay:950ms">C</span>
+      <span class="vs-l" id="vs-a" style="animation-delay:500ms">A</span><span class="vs-l vs-amp" style="animation-delay:750ms">&amp;</span><span class="vs-l" id="vs-b" style="animation-delay:950ms">C</span>
     </div>
-    <div class="vs-names">Tiến Anh &amp; Kim Chiu</div>
+    <div class="vs-names" id="vs-names">Tiến Anh &amp; Kim Chiu</div>
     <div class="vs-rule"></div>
     <div class="vs-date">05 · 04 · 2027</div>
   </div>
@@ -92,6 +92,12 @@
   if (!el) return;
   // ?open skips the intro entirely (same rule as the app)
   if (/[?&]open(=|&|$)/.test(location.search)) { el.remove(); return; }
+  // Bride's side lists the bride first (same rule as the app's side detection)
+  if (/\/nha-gai(\/|$)/.test(location.pathname)) {
+    document.getElementById('vs-a').textContent = 'C';
+    document.getElementById('vs-b').textContent = 'A';
+    document.getElementById('vs-names').textContent = 'Kim Chiu & Tiến Anh';
+  }
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var HOLD = reduced ? 500 : 2900; // how long the intro stays after it starts playing
   var played, left = false;
@@ -552,6 +558,10 @@ const DATA = {
   ],
 };
 
+// The same file is deployed as nha-trai/ and nha-gai/; the URL picks the side, the `side` prop is the fallback
+const PATH_SIDE = typeof location !== 'undefined' && /\/nha-gai(\/|$)/.test(location.pathname) ? 'gai' : null;
+const sideOf = (props) => PATH_SIDE || (props.side === 'gai' ? 'gai' : 'trai');
+
 const LINKS = [['trang-chu', 'Trang chủ'], ['loi-moi', 'Lời mời'], ['chuyen-tinh', 'Chuyện tình'], ['le-cuoi', 'Lễ cưới'], ['album', 'Album'], ['xac-nhan', 'Xác nhận'], ['mung-cuoi', 'Mừng cưới']];
 
 function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
@@ -587,7 +597,7 @@ class Component extends DCLogic {
     const st = this.state;
     if (!st.name.trim()) { this.setState({ nameErr: 'Vui lòng nhập họ tên' }); return; }
     if (st.sending) return;
-    const entry = { name: st.name.trim(), attend: st.attend, guests: st.attend === 'yes' ? st.guests : '0', wish: st.wish.trim(), side: this.props.side === 'gai' ? 'gai' : 'trai', time: new Date().toISOString() };
+    const entry = { name: st.name.trim(), attend: st.attend, guests: st.attend === 'yes' ? st.guests : '0', wish: st.wish.trim(), side: sideOf(this.props), time: new Date().toISOString() };
     const done = () => {
       const wishes = entry.wish ? [{ name: entry.name, wish: entry.wish, time: entry.time }, ...st.wishes] : st.wishes;
       if (!(this.props.sheetUrl || '').trim()) { try { localStorage.setItem('ta-wishes', JSON.stringify(wishes)); } catch (e) {} }
@@ -690,7 +700,7 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const side = this.props.side === 'gai' ? 'gai' : 'trai', S = DATA.sides[side], st = this.state, h = React.createElement;
+    const side = sideOf(this.props), S = DATA.sides[side], st = this.state, h = React.createElement;
     const sparkle = this.props.sparkle !== false && !this.reduced;
     const A = side === 'trai' ? DATA.groom : DATA.bride, B = side === 'trai' ? DATA.bride : DATA.groom;
     const q = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
