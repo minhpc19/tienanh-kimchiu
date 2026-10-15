@@ -1,0 +1,10 @@
+/* Base element styles */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font:var(--type-body)}
+h1,h2,h3,h4{margin:0;font-family:var(--font-serif);font-weight:var(--weight-light);color:var(--text-strong);letter-spacing:var(--tracking-display);text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+a{color:var(--text-accent);text-decoration:none;border-bottom:var(--hairline) solid var(--line-hair);transition:color var(--dur-fast) var(--ease-soft),border-color var(--dur-fast) var(--ease-soft)}
+a:hover{color:var(--accent-press);border-color:var(--line-strong)}
+::selection{background:var(--blush-100);color:var(--ink-900)}
+:focus-visible{outline:none;box-shadow:0 0 0 3px var(--focus-ring)}

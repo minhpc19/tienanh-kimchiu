@@ -1,0 +1,58 @@
+/* Colors — ivory paper, lacquer red as the lead colour, champagne gold as secondary ornament, soft blush. */
+:root{
+/* Ivory — paper surfaces */
+--ivory-0:#FFFEFB;--ivory-50:#FDFBF7;--ivory-100:#FAF6EF;--ivory-200:#F3ECE0;--ivory-300:#E8DDCB;
+/* Champagne gold — rules, ornaments, accents */
+--gold-100:#F3EBDA;--gold-200:#E9DCC0;--gold-300:#D9C59C;--gold-400:#C4A874;--gold-500:#A88A55;--gold-600:#8A6E3F;--gold-700:#6E5630;
+/* Blush — soft romance, hover washes */
+--blush-50:#FBF4F2;--blush-100:#F6E8E4;--blush-200:#EED5CF;--blush-300:#DDB5AC;--blush-500:#B47C72;--blush-700:#8A564D;
+/* Sage — quiet secondary (greenery) */
+--sage-100:#EEF1EA;--sage-200:#DDE3D6;--sage-400:#A9B5A1;--sage-600:#6F7F68;
+/* Lacquer red — the lead brand colour (đỏ son) */
+--red-50:#FCF4F3;--red-100:#F8E5E3;--red-200:#EFC9C5;--red-300:#E0A39D;--red-400:#CB716A;--red-500:#B23A33;--red-600:#9A2A25;--red-700:#7C1F1C;--red-800:#5E1715;
+/* Legacy Song Hỷ aliases */
+--hy-100:var(--red-100);--hy-500:var(--red-500);--hy-700:var(--red-700);
+/* Ink — warm brown-black text */
+--ink-900:#3A322B;--ink-700:#5C524A;--ink-500:#8C8178;--ink-300:#BDB3A9;--ink-200:#D8D0C6;
+
+/* Semantic aliases */
+--surface-page:var(--ivory-50);
+--surface-card:var(--ivory-0);
+--surface-sunken:var(--ivory-100);
+--surface-tint:var(--red-50);
+--surface-brand:var(--red-600);
+--surface-brand-deep:var(--red-700);
+--surface-inverse:var(--ink-900);
+--surface-overlay:rgba(58,50,43,.38);
+--surface-glass:rgba(253,251,247,.72);
+
+--text-strong:var(--ink-900);
+--text-body:var(--ink-700);
+--text-muted:var(--ink-500);
+--text-faint:var(--ink-300);
+--text-accent:var(--red-600);
+--text-gold:var(--gold-600);
+--text-on-brand:var(--ivory-50);
+--ornament-on-brand:var(--gold-300);
+--text-romance:var(--blush-700);
+--text-on-inverse:var(--ivory-50);
+--text-on-accent:var(--ivory-0);
+
+--line-hair:var(--red-200);
+--line-soft:var(--red-100);
+--line-strong:var(--red-500);
+--line-neutral:var(--ink-200);
+
+--accent:var(--red-600);
+--accent-hover:var(--red-700);
+--accent-press:var(--red-800);
+--accent-wash:var(--red-50);
+--ornament:var(--red-300);
+--ornament-gold:var(--gold-400);
+
+--state-success:var(--sage-600);
+--state-success-wash:var(--sage-100);
+--state-error:var(--red-500);
+--state-error-wash:var(--red-100);
+--focus-ring:rgba(178,58,51,.28);
+}
